@@ -1,0 +1,198 @@
+﻿@page
+@model SimuladorDistrato.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Simulador de Distrato";
+}
+
+<div class="container mt-5">
+
+    <h1 class="mb-4">
+        Simulador de Distrato de Locação
+    </h1>
+
+    <p class="mb-4">
+        Informe os dados abaixo para obter uma estimativa dos valores
+        envolvidos no encerramento antecipado do contrato de locação.
+    </p>
+
+    <form method="post">
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">
+                    Valor do aluguel
+                </label>
+
+                <input type="text"
+                       class="form-control campo-moeda"
+                       data-hidden="Input_ValorAluguel"
+                       inputmode="numeric"
+                       autocomplete="off" />
+
+                <input asp-for="Input.ValorAluguel"
+                       type="hidden"
+                       id="Input_ValorAluguel" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">
+                    Valor total da multa contratual
+                </label>
+
+                <input type="text"
+                       class="form-control campo-moeda"
+                       data-hidden="Input_MultaContratual"
+                       inputmode="numeric"
+                       autocomplete="off" />
+
+                <input asp-for="Input.MultaContratual"
+                       type="hidden"
+                       id="Input_MultaContratual" />
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label asp-for="Input.DataInicioContrato"
+                       class="form-label">
+                    Data de início do contrato
+                </label>
+
+                <input asp-for="Input.DataInicioContrato"
+                       class="form-control"
+                       type="date" />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label asp-for="Input.DataFimContrato"
+                       class="form-label">
+                    Data de término do contrato
+                </label>
+
+                <input asp-for="Input.DataFimContrato"
+                       class="form-control"
+                       type="date" />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label asp-for="Input.DataDesocupacao"
+                       class="form-label">
+                    Data da desocupação
+                </label>
+
+                <input asp-for="Input.DataDesocupacao"
+                       class="form-control"
+                       type="date" />
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">
+                    Valor da caução
+                </label>
+
+                <input type="text"
+                       class="form-control campo-moeda"
+                       data-hidden="Input_ValorCaucao"
+                       inputmode="numeric"
+                       autocomplete="off" />
+
+                <input asp-for="Input.ValorCaucao"
+                       type="hidden"
+                       id="Input_ValorCaucao" />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">
+                    Outros débitos
+                </label>
+
+                <input type="text"
+                       class="form-control campo-moeda"
+                       data-hidden="Input_OutrosDebitos"
+                       inputmode="numeric"
+                       autocomplete="off" />
+
+                <input asp-for="Input.OutrosDebitos"
+                       type="hidden"
+                       id="Input_OutrosDebitos" />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">
+                    Outros créditos
+                </label>
+
+                <input type="text"
+                       class="form-control campo-moeda"
+                       data-hidden="Input_OutrosCreditos"
+                       inputmode="numeric"
+                       autocomplete="off" />
+
+                <input asp-for="Input.OutrosCreditos"
+                       type="hidden"
+                       id="Input_OutrosCreditos" />
+            </div>
+        </div>
+
+        <button type="submit"
+                class="btn btn-primary mt-3">
+            Calcular distrato
+        </button>
+
+    </form>
+
+
+    @if (!string.IsNullOrEmpty(Model.MensagemErro))
+    {
+        <div class="alert alert-danger mt-4">
+            @Model.MensagemErro
+        </div>
+    }
+
+
+    @if (Model.Resultado != null)
+    {
+        <div class="card mt-5">
+
+            <div class="card-body">
+
+                <h2 class="card-title mb-4">
+                    Resultado da simulação
+                </h2>
+
+                <p>
+                    <strong>Duração total do contrato:</strong>
+                    @Model.Resultado.DiasTotaisContrato dias
+                </p>
+
+                <p>
+                    <strong>Dias restantes:</strong>
+                    @Model.Resultado.DiasRestantesContrato dias
+                </p>
+
+                <p>
+                    <strong>Multa proporcional:</strong>
+                    @Model.Resultado.MultaProporcional.ToString("C")
+                </p>
+
+                <hr />
+
+                <h3>
+                    Saldo estimado:
+                    @Model.Resultado.SaldoFinal.ToString("C")
+                </h3>
+
+            </div>
+
+        </div>
+    }
+
+</div>
