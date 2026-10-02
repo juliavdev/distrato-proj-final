@@ -22,23 +22,7 @@
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">
-                    Valor do aluguel
-                </label>
-
-                <input type="text"
-                       class="form-control campo-moeda"
-                       data-hidden="Input_ValorAluguel"
-                       inputmode="numeric"
-                       autocomplete="off" />
-
-                <input asp-for="Input.ValorAluguel"
-                       type="hidden"
-                       id="Input_ValorAluguel" />
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label">
-                    Valor total da multa contratual
+                    Valor total da multa contratual prevista em contrato
                 </label>
 
                 <input type="text"
@@ -50,6 +34,9 @@
                 <input asp-for="Input.MultaContratual"
                        type="hidden"
                        id="Input_MultaContratual" />
+                <input type="hidden"
+                       name="__Invariant"
+                       value="Input.MultaContratual" />
             </div>
 
         </div>
@@ -107,6 +94,9 @@
                 <input asp-for="Input.ValorCaucao"
                        type="hidden"
                        id="Input_ValorCaucao" />
+                <input type="hidden"
+                       name="__Invariant"
+                       value="Input.ValorCaucao" />
             </div>
 
             <div class="col-md-4 mb-3">
@@ -123,6 +113,10 @@
                 <input asp-for="Input.OutrosDebitos"
                        type="hidden"
                        id="Input_OutrosDebitos" />
+                <input type="hidden"
+                       name="__Invariant"
+                       value="Input.OutrosDebitos" />
+
             </div>
 
             <div class="col-md-4 mb-3">
@@ -139,12 +133,15 @@
                 <input asp-for="Input.OutrosCreditos"
                        type="hidden"
                        id="Input_OutrosCreditos" />
+                <input type="hidden"
+                       name="__Invariant"
+                       value="Input.OutrosCreditos" />
             </div>
         </div>
 
         <button type="submit"
                 class="btn btn-primary mt-3">
-            Calcular distrato
+            Calcular
         </button>
 
     </form>

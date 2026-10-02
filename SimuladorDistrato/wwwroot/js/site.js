@@ -1,8 +1,4 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", function () {
 
     const camposMoeda = document.querySelectorAll(".campo-moeda");
 
@@ -11,24 +7,52 @@ document.addEventListener("DOMContentLoaded", function () {
         const hiddenId = campo.dataset.hidden;
         const hidden = document.getElementById(hiddenId);
 
+        if (hidden && hidden.value) {
+
+            const valorInicial = parseFloat(
+                hidden.value.replace(",", ".")
+            );
+
+            if (!isNaN(valorInicial)) {
+                campo.value = valorInicial.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                });
+            }
+        }
+
+        if (hidden.value !== "") {
+
+            const valorInicial = Number(hidden.value);
+
+            if (!isNaN(valorInicial)) {
+                campo.value = valorInicial.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                });
+            }
+        }
+
         campo.addEventListener("input", function () {
 
-            let somenteNumeros = this.value.replace(/\D/g, "");
+            const numeros = this.value.replace(/\D/g, "");
 
-            if (!somenteNumeros) {
+            if (numeros === "") {
                 this.value = "";
                 hidden.value = "";
                 return;
             }
 
-            const valorNumerico = Number(somenteNumeros) / 100;
+            const centavos = parseInt(numeros, 10);
 
-            this.value = valorNumerico.toLocaleString("pt-BR", {
+            const valor = centavos / 100;
+
+            this.value = valor.toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL"
             });
 
-            hidden.value = valorNumerico.toFixed(2);
+            hidden.value = valor.toFixed(2);
         });
 
     });

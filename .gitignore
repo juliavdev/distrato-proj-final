@@ -7,6 +7,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/Dotnet.gitignore
 
+## Visual Studio / .NET / C#
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -22,27 +28,60 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+build/
+target/
+
+# Visual Studio Cache & Temporary files
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
 # .NET Core
 project.lock.json
 project.fragment.lock.json
 artifacts/
 
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
 # NuGet Packages
 *.nupkg
-# NuGet Symbol Packages
+**/packages/*
+!**/packages/build/
 *.snupkg
 
+# Publish output
+publish/
+*.azurePubxml
+*.pubxml
+
 # dotenv environment variables file
-.env
+*.env
+*.pem
+*.pfx
+appsettings.Development.json
+appsettings.Local.json
 
 # Others
 ~$*
 *~
 CodeCoverage/
+
+# Testing & Code Coverage
+TestResults/
+*.coverage
+*.coveragexml
+
+# OS Specific
+.DS_Store
+Thumbs.db
 
 # MSBuild Binary and Structured Log
 *.binlog

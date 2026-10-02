@@ -2,8 +2,6 @@
 
 public class SimulacaoDados
 {
-    public double ValorAluguel { get; set; }
-
     public DateTime DataInicioContrato { get; set; }
 
     public DateTime DataFimContrato { get; set; }
