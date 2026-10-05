@@ -157,38 +157,84 @@
 
     @if (Model.Resultado != null)
     {
-        <div class="card mt-5">
-
-            <div class="card-body">
-
-                <h2 class="card-title mb-4">
-                    Resultado da simulação
-                </h2>
-
-                <p>
-                    <strong>Duração total do contrato:</strong>
-                    @Model.Resultado.DiasTotaisContrato dias
-                </p>
-
-                <p>
-                    <strong>Dias restantes:</strong>
-                    @Model.Resultado.DiasRestantesContrato dias
-                </p>
-
-                <p>
-                    <strong>Multa proporcional:</strong>
-                    @Model.Resultado.MultaProporcional.ToString("C")
-                </p>
-
-                <hr />
-
-                <h3>
-                    Saldo estimado:
-                    @Model.Resultado.SaldoFinal.ToString("C")
-                </h3>
-
+        <div class="card mt-4 shadow-sm">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-receipt"></i> DETALHAMENTO DO DISTRATO</h5>
+                <span class="badge bg-secondary">Simulação sem Retenção de Dados</span>
             </div>
 
+            <div class="card-body p-4">
+
+                <div class="alert @(Model.Resultado.SaldoFinal > 0 ? "alert-danger" : Model.Resultado.SaldoFinal < 0 ? "alert-success" : "alert-secondary") text-center p-3 mb-4 shadow-sm" role="alert">
+                    <span class="text-uppercase fw-bold d-block mb-1" style="letter-spacing: 1px;">Resultado Final da Apuração</span>
+                    <h4 class="fw-bold mb-0">@Model.Resultado.MensagemResponsabilidadePagamento</h4>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="fw-bold text-muted border-bottom pb-2">1. MULTA</h6>
+                    <div class="p-3 bg-light rounded border">
+                        <p class="mb-0 font-monospace fw-bold fs-6">@Model.Resultado.FormulaMultaDetalhada</p>
+                        <small class="text-muted">
+                            Fórmula Aplicada*: Multa Proporcional = (Multa Total Contratual / Duração Total do Contrato em Dias) x Dias Restantes
+                        </small>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="fw-bold text-muted border-bottom pb-2">2. DEMONSTRATIVO</h6>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle border">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Descrição</th>
+                                    <th class="text-center">Tipo</th>
+                                    <th class="text-end">Valor (R$)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Resultado.ItensExtrato.Count; i++)
+                                {
+                                    var item = Model.Resultado.ItensExtrato[i];
+                                    <tr>
+                                        <td>@(i + 1)</td>
+                                        <td class="fw-medium">@item.Descricao</td>
+                                        <td class="text-center">
+                                            @if (item.EhDebito)
+                                            {
+                                                <span class="badge bg-danger-subtle text-danger border border-danger px-2 py-1">DÉBITO</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-success-subtle text-success border border-success px-2 py-1">CRÉDITO</span>
+                                            }
+                                        </td>
+                                        <td class="text-end fw-bold font-monospace @(item.EhDebito ? "text-danger" : "text-success")">
+                                            @item.Valor.ToString("C2")
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot class="table-light">
+                                <tr>
+                                    <td colspan="3" class="text-end fw-bold fs-5">SALDO FINAL APURADO:</td>
+                                    <td class="text-end fw-bold fs-5 font-monospace @(Model.Resultado.SaldoFinal > 0 ? "text-danger" : Model.Resultado.SaldoFinal < 0 ? "text-success" : "text-dark")">
+                                        @Model.Resultado.SaldoFinal.ToString("C2")
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <small class="text-muted">
+                        <em>* Os débitos aumentam a obrigação do locatário. Os créditos representam os valores a serem deduzidos.</em>
+                    </small>
+                </div>
+
+            </div>
         </div>
     }
 
